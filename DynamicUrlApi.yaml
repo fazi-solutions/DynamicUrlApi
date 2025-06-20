@@ -1,13 +1,12 @@
 openapi: 3.0.0
 info:
-  title: Casino Integration API
+  title: Fazi Integration API
   version: 1.0.0
   description: >
-    This API endpoint allows external partners to request a dynamically generated URL 
-    for launching a game session. All parameters are passed via URL-encoded query string values.
+    This API contains a single endpoint that allows external partners to request a dynamically generated URL for launching a game session. All parameters are passed via URL-encoded query string values.
 
 servers:
-  - url:  https://aggregation-api.fazi.rs/
+  - url:  https://integration.fazi.rs
 
 paths:
   /Home/GetDynamicURL:
@@ -15,17 +14,17 @@ paths:
       summary: Generates a dynamic game launch URL
       description: >
         Accepts a list of query parameters and returns a dynamic URL that can be used 
-        to redirect or launch a session. All parameters must be URL-encoded.
+        to launch a game. All parameters must be URL-encoded.
       parameters:
         - name: portalCode
           in: query
-          description: Unique code identifying the partner portal.
+          description: Unique code identifying portal (FAZI provided).
           required: true
           schema:
             type: string
         - name: token
           in: query
-          description: Authorization token for the player session.
+          description: One time session token unique for player, used only for authentication.
           required: true
           schema:
             type: string
@@ -37,19 +36,19 @@ paths:
             type: string
         - name: playerID
           in: query
-          description: Unique identifier of the player (optional).
+          description: Unique code identifier of the player.
           required: false
           schema:
             type: string
         - name: integrationType
           in: query
-          description: Internal unique identifier of the integration type.
+          description: Internal unique identifier of integrataon.
           required: false
           schema:
             type: integer
         - name: moneyType
           in: query
-          description: Identifier for money mode (e.g. 1 = real, 2 = demo).
+          description: 0 if player chooses to play for free and 1 if player plays for real money.
           required: false
           schema:
             type: integer
@@ -62,25 +61,25 @@ paths:
             format: uri
         - name: languageCode
           in: query
-          description: Language code (e.g. en, de, sr).
+          description: Language ISO code .
           required: false
           schema:
             type: string
         - name: currency
           in: query
-          description: Currency used in the session (e.g. EUR, RSD).
+          description: Currency ISO code.
           required: false
           schema:
             type: string
         - name: roomID
           in: query
-          description: Room identifier (optional).
+          description: Unique identifier of the room.
           required: false
           schema:
             type: string
-        - name: countryISO3
+        - name: countryCode
           in: query
-          description: Country in ISO 3166-1 alpha-3 format (e.g. SRB, USA).
+          description: Country ISO3 code where the game is running.
           required: false
           schema:
             type: string
@@ -98,41 +97,86 @@ paths:
                   status:
                     type: string
                     example: OK
-                  hostUrl:
+                  launchUrl:
                     type: string
                     format: uri
-                    example: http://casino1.com
-                  apiServerUrl:
-                    type: string
-                    format: uri
-                    example: http://apiserver.casino1.com
+                    example: https://gameserver-store-ms.fazi.rs/Home/IntegrationGameLaunch/omegamozzartbetrsd?moneyType=0&currency=RSD&gameName=WildHot40&integrationType=78&languageCode=eng&platform=desktop
 
         '401':
-          description: Unauthorized – token is invalid or expired
+          description: Unauthorized – invalid credentials
           content:
             application/json:
               schema:
                 type: object
                 properties:
+                  errorCode:
+                    type: string
+                    example: UNAUTHORIZED
+                  errorMessage:
+                    type: string
+                    example: The client is not authorized for this action.
+                  result:
+                    nullable: true
+                    example: null
+                  correlationId:
+                    type: string
+                    format: uuid
+                    example: 5915d539-6107-48bb-954d-6cb049f8e662
                   timestamp:
                     type: string
                     format: date-time
                     example: 2025-06-20T13:38:55.623+00:00
-                  status:
-                    type: integer
-                    example: 401
-                  error:
-                    type: string
-                    example: Unauthorized
-                  path:
-                    type: string
-                    example: /api/game/launch/url
 
         '400':
           description: Bad request – required parameters are missing or invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorCode:
+                    type: string
+                    example: RequestParameterInvalidType
+                  errorMessage:
+                    type: string
+                    example: One or more request parameters have invalid type.
+                  result:
+                    nullable: true
+                    example: null
+                  correlationId:
+                    type: string
+                    format: uuid
+                    example: 5915d539-6107-48bb-954d-6cb049f8e662
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2025-06-20T13:38:55.623+00:00
 
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorCode:
+                    type: string
+                    example: GENERAL_ERROR
+                  errorMessage:
+                    type: string
+                    example: General server error. Please contact Fazi support.
+                  result:
+                    nullable: true
+                    example: null
+                  correlationId:
+                    type: string
+                    format: uuid
+                    example: 5915d539-6107-48bb-954d-6cb049f8e662
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2025-06-20T13:38:55.623+00:00
+
 
 components:
   securitySchemes:
