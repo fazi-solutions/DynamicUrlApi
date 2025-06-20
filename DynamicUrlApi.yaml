@@ -115,9 +115,6 @@ paths:
                   errorMessage:
                     type: string
                     example: The client is not authorized for this action.
-                  result:
-                    nullable: true
-                    example: null
                   correlationId:
                     type: string
                     format: uuid
@@ -140,9 +137,6 @@ paths:
                   errorMessage:
                     type: string
                     example: One or more request parameters have invalid type.
-                  result:
-                    nullable: true
-                    example: null
                   correlationId:
                     type: string
                     format: uuid
@@ -165,9 +159,6 @@ paths:
                   errorMessage:
                     type: string
                     example: General server error. Please contact Fazi support.
-                  result:
-                    nullable: true
-                    example: null
                   correlationId:
                     type: string
                     format: uuid
