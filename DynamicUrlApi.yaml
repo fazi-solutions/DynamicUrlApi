@@ -5,12 +5,18 @@ info:
   description: >
     This API contains a single endpoint that allows external partners to request a dynamically generated URL for launching a game session. All parameters are passed via URL-encoded query string values.
 
+tags:
+  - name: Game Launch
+    description: Endpoints related to launching games
+
 servers:
   - url:  https://integration.fazi.rs
 
 paths:
   /Home/GetDynamicURL:
     get:
+      tags:
+        - Game Launch
       summary: Generates a dynamic game launch URL
       description: >
         Accepts a list of query parameters and returns a dynamic URL that can be used 
