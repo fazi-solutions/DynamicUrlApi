@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  title: Casino Integration API
+  version: 1.0.0
+  description: >
+    This API endpoint allows external partners to request a dynamically generated URL 
+    for launching a game session. All parameters are passed via URL-encoded query string values.
+
+servers:
+  - url:  https://aggregation-api.fazi.rs/
+
+paths:
+  /Home/GetDynamicURL:
+    get:
+      summary: Generates a dynamic game launch URL
+      description: >
+        Accepts a list of query parameters and returns a dynamic URL that can be used 
+        to redirect or launch a session. All parameters must be URL-encoded.
+      parameters:
+        - name: portalCode
+          in: query
+          description: Unique code identifying the partner portal.
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: query
+          description: Authorization token for the player session.
+          required: true
+          schema:
+            type: string
+        - name: gameName
+          in: query
+          description: Name of the game to be launched.
+          required: true
+          schema:
+            type: string
+        - name: playerID
+          in: query
+          description: Unique identifier of the player (optional).
+          required: false
+          schema:
+            type: string
+        - name: integrationType
+          in: query
+          description: Internal unique identifier of the integration type.
+          required: false
+          schema:
+            type: integer
+        - name: moneyType
+          in: query
+          description: Identifier for money mode (e.g. 1 = real, 2 = demo).
+          required: false
+          schema:
+            type: integer
+        - name: lobbyUrl
+          in: query
+          description: URL where the player is redirected after closing the game.
+          required: false
+          schema:
+            type: string
+            format: uri
+        - name: languageCode
+          in: query
+          description: Language code (e.g. en, de, sr).
+          required: false
+          schema:
+            type: string
+        - name: currency
+          in: query
+          description: Currency used in the session (e.g. EUR, RSD).
+          required: false
+          schema:
+            type: string
+        - name: roomID
+          in: query
+          description: Room identifier (optional).
+          required: false
+          schema:
+            type: string
+        - name: countryISO3
+          in: query
+          description: Country in ISO 3166-1 alpha-3 format (e.g. SRB, USA).
+          required: false
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 3
+
+      responses:
+        '200':
+          description: Dynamic URL successfully generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: OK
+                  hostUrl:
+                    type: string
+                    format: uri
+                    example: http://casino1.com
+                  apiServerUrl:
+                    type: string
+                    format: uri
+                    example: http://apiserver.casino1.com
+
+        '401':
+          description: Unauthorized – token is invalid or expired
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2025-06-20T13:38:55.623+00:00
+                  status:
+                    type: integer
+                    example: 401
+                  error:
+                    type: string
+                    example: Unauthorized
+                  path:
+                    type: string
+                    example: /api/game/launch/url
+
+        '400':
+          description: Bad request – required parameters are missing or invalid
+
+        '500':
+          description: Internal server error
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
