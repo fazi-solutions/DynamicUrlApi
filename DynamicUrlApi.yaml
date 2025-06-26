@@ -46,12 +46,6 @@ paths:
           required: false
           schema:
             type: string
-        - name: integrationType
-          in: query
-          description: Internal unique identifier of integrataon.
-          required: false
-          schema:
-            type: integer
         - name: moneyType
           in: query
           description: 0 if player chooses to play for free and 1 if player plays for real money.
@@ -106,29 +100,7 @@ paths:
                   launchUrl:
                     type: string
                     format: uri
-                    example: https://gameserver-store-ms.fazi.rs/Home/IntegrationGameLaunch/omegamozzartbetrsd?moneyType=0&currency=RSD&gameName=WildHot40&integrationType=78&languageCode=eng&platform=desktop
-
-        '401':
-          description: Unauthorized – invalid credentials
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errorCode:
-                    type: string
-                    example: UNAUTHORIZED
-                  errorMessage:
-                    type: string
-                    example: The client is not authorized for this action.
-                  correlationId:
-                    type: string
-                    format: uuid
-                    example: 5915d539-6107-48bb-954d-6cb049f8e662
-                  timestamp:
-                    type: string
-                    format: date-time
-                    example: 2025-06-20T13:38:55.623+00:00
+                    example: https://gameserver-store-ms.fazi.rs/Home/IntegrationGameLaunch/omegamozzartbetrsd?moneyType=0&currency=RSD&gameName=WildHot40&languageCode=eng&platform=desktop&CountryCode=TUR
 
         '400':
           description: Bad request – required parameters are missing or invalid
@@ -143,6 +115,57 @@ paths:
                   errorMessage:
                     type: string
                     example: One or more request parameters have invalid type.
+                  correlationId:
+                    type: string
+                    format: uuid
+                    example: 5915d539-6107-48bb-954d-6cb049f8e662
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2025-06-20T13:38:55.623+00:00
+              examples:
+                invalidType:
+                  summary: Parameter has invalid type
+                  value:
+                    errorCode: RequestParameterInvalidType
+                    errorMessage: One or more request parameters have invalid type.
+                    correlationId: 5915d539-6107-48bb-954d-6cb049f8e662
+                    timestamp: 2025-06-20T13:38:55.623+00:00
+                missingParameter:
+                  summary: Required parameter is missing
+                  value:
+                    errorCode: RequestParameterMissing
+                    errorMessage: The 'token' parameter is required.
+                    correlationId: d74e213a-28a2-4f55-a65e-1e7d4a7c5a11
+                    timestamp: 2025-06-25T08:19:01.123+00:00
+                invalidPortalCode:
+                  summary: Unrecognized portal code provided
+                  value:
+                    errorCode: InvalidPortalCode
+                    errorMessage: The provided portalCode is not valid or not registered.
+                    correlationId: a12b34cd-5ef6-7890-abcd-112233445566
+                    timestamp: 2025-06-25T09:41:18.777+00:00
+                invalidGameName:
+                  summary: The game name is invalid or not available
+                  value:
+                    errorCode: InvalidGameName
+                    errorMessage: The specified gameName does not exist or is not available for this partner.
+                    correlationId: b1c2d3e4-5678-90ff-abcd-334455667788
+                    timestamp: 2025-06-25T09:42:10.901+00:00
+
+        '401':
+          description: Unauthorized – invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorCode:
+                    type: string
+                    example: UNAUTHORIZED
+                  errorMessage:
+                    type: string
+                    example: The client is not authorized for this action.
                   correlationId:
                     type: string
                     format: uuid
