@@ -40,6 +40,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: currency
+          in: query
+          description: Currency ISO code.
+          required: true
+          schema:
+            type: string
         - name: playerID
           in: query
           description: Unique code identifier of the player.
@@ -65,12 +71,6 @@ paths:
           required: false
           schema:
             type: string
-        - name: currency
-          in: query
-          description: Currency ISO code.
-          required: false
-          schema:
-            type: string
         - name: roomID
           in: query
           description: Unique identifier of the room.
@@ -85,6 +85,18 @@ paths:
             type: string
             minLength: 3
             maxLength: 3
+        - name: platform
+          in: query
+          description: The value can be \"desktop\" or \"mobile\", it depends where the game is launched.
+          required: false
+          schema:
+            type: string
+        - name: isFullscreenEnabled
+          in: query
+          description: This parameter overrides the default setting for the full-screen mode.
+          required: false
+          schema:
+            type: string
 
       responses:
         '200':
