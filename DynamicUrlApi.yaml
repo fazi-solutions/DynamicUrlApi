@@ -13,7 +13,7 @@ servers:
   - url:  https://integration.fazi.rs
 
 paths:
-  /Home/GetDynamicLaunchURL:
+  /api/v1/DynamicLaunchURL:
     get:
       tags:
         - Game Launch
@@ -177,14 +177,6 @@ paths:
                     status:
                       code: 1010
                       description: The provided portalCode is not valid or not registered.
-                    correlationId: a12b34cd-5ef6-7890-abcd-112233445566
-                    timestamp: 2025-06-25T09:41:18.777+00:00
-                invalidToken:
-                  summary: Invalid Token
-                  value:
-                    status:
-                      code: 6005
-                      description: The specified token is not valid.
                     correlationId: a12b34cd-5ef6-7890-abcd-112233445566
                     timestamp: 2025-06-25T09:41:18.777+00:00
                 invalidCurrency:
