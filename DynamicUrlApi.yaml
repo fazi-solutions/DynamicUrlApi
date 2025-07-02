@@ -128,7 +128,7 @@ paths:
                   timestamp:
                     type: string
                     format: date-time
-                    example: 2025-06-20T13:38:55.623+00:00
+                    example: 2025-07-02T00:15:00Z
 
         '400':
           description: Bad request – required parameters are missing or invalid
@@ -153,7 +153,7 @@ paths:
                   timestamp:
                     type: string
                     format: date-time
-                    example: 2025-06-20T13:38:55.623+00:00
+                    example: 2025-07-02T03:30:45Z
               examples:
                 invalidType:
                   summary: Parameter has invalid type
@@ -162,7 +162,7 @@ paths:
                       code: 1001
                       description: One or more request parameters have invalid type.
                     correlationId: 5915d539-6107-48bb-954d-6cb049f8e662
-                    timestamp: 2025-06-20T13:38:55.623+00:00
+                    timestamp: 2025-07-02T06:45:30Z
                 missingParameter:
                   summary: Required parameter is missing
                   value:
@@ -170,7 +170,7 @@ paths:
                       code: 1002
                       description: One or more required parameters are missing.
                     correlationId: d74e213a-28a2-4f55-a65e-1e7d4a7c5a11
-                    timestamp: 2025-06-25T08:19:01.123+00:00
+                    timestamp: 2025-07-02T09:00:15Z
                 invalidPortalCode:
                   summary: Unrecognized portal code provided
                   value:
@@ -178,7 +178,7 @@ paths:
                       code: 1010
                       description: The provided portalCode is not valid or not registered.
                     correlationId: a12b34cd-5ef6-7890-abcd-112233445566
-                    timestamp: 2025-06-25T09:41:18.777+00:00
+                    timestamp: 2025-07-02T12:15:00Z
                 invalidCurrency:
                   summary: Invalid Currency
                   value:
@@ -186,7 +186,7 @@ paths:
                       code: 8004
                       description: The specified currency is not valid.
                     correlationId: a12b34cd-5ef6-7890-abcd-112233445566
-                    timestamp: 2025-06-25T09:41:18.777+00:00
+                    timestamp: 2025-07-02T15:30:45Z
                 invalidGameName:
                   summary: The game name is invalid or not available
                   value:
@@ -194,7 +194,7 @@ paths:
                       code: 8005
                       description: The specified gameName does not exist or is not available for this partner.
                     correlationId: b1c2d3e4-5678-90ff-abcd-334455667788
-                    timestamp: 2025-06-25T09:42:10.901+00:00
+                    timestamp: 2025-07-02T18:45:30Z
 
         '401':
           description: Unauthorized – invalid credentials
@@ -219,7 +219,7 @@ paths:
                   timestamp:
                     type: string
                     format: date-time
-                    example: 2025-06-20T13:38:55.623+00:00
+                    example: 2025-07-02T21:00:15Z
 
         '500':
           description: Internal server error
@@ -244,7 +244,7 @@ paths:
                   timestamp:
                     type: string
                     format: date-time
-                    example: 2025-06-20T13:38:55.623+00:00
+                    example: 2025-07-02T23:59:59Z
 
 
 components:
