@@ -5,6 +5,7 @@ info:
   description: >
     This API contains a single endpoint that allows external partners to request a dynamically generated URL for launching a game session. All parameters are passed via URL-encoded query string values.
 
+
 tags:
   - name: Game Launch
     description: Endpoints related to launching games
@@ -18,10 +19,19 @@ paths:
       tags:
         - Game Launch
       summary: Generates a dynamic game launch URL
-      description: >
+      description: |
         Accepts a list of query parameters and returns a dynamic URL that can be used 
         to launch a game. All parameters must be URL-encoded.
+
+        🔐 This endpoint requires authentication using the `X-API-KEY` header.
       parameters:
+        - name: X-API-KEY
+          in: header
+          required: true
+          description: |
+            🔐 **API authentication key**. Required to authorize access to the endpoint.
+          schema:
+            type: string
         - name: portalCode
           in: query
           description: Unique code identifying portal (FAZI provided).
@@ -247,8 +257,4 @@ paths:
                     example: 2025-07-02T23:59:59Z
 
 
-components:
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
+
